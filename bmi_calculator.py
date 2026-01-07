@@ -15,7 +15,8 @@ def create_output(title, subtitle):
         "items": [
             {
                 "title": title,
-                "subtitle": subtitle
+                "subtitle": subtitle,
+                "arg": title
             }
         ]
     }, ensure_ascii=False)

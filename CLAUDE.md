@@ -33,7 +33,8 @@ This is an Alfred Workflow Script Filter that:
   "items": [
     {
       "title": "計算結果",
-      "subtitle": "補足情報"
+      "subtitle": "補足情報",
+      "arg": "計算結果"
     }
   ]
 }

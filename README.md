@@ -4,8 +4,9 @@
 
 ## 機能
 
+- **キーワードのみ**: 使用方法を表示
 - **身長のみ入力**: 理想体重、痩せ体重、肥満体重を表示
-- **身長+体重入力**: BMI値と体格判定を表示
+- **身長+体重入力**: BMI値と体格判定を表示（日本肥満学会基準）
 
 ## インストール
 
@@ -25,6 +26,19 @@
 
 ## 使い方
 
+### キーワードのみ入力
+
+Alfred で以下のように入力:
+```
+bmi
+```
+
+結果例:
+```
+身長(cm) を入力してください
+身長(cm) を入力してください
+```
+
 ### 身長のみ入力
 
 Alfred で以下のように入力:
@@ -34,8 +48,8 @@ bmi 170
 
 結果例:
 ```
-理想: 63.6kg | 痩せ: 53.5kg | 肥満: 72.2kg
-身長170cmの場合の各体重基準値
+身長: 170cm, 痩せ: 53.5kg, 理想: 63.6kg, 肥満: 72.2kg
+体重(kg) を入力してください
 ```
 
 ### 身長+体重入力
@@ -47,8 +61,7 @@ bmi 170 65
 
 結果例:
 ```
-BMI: 22.5 (標準)
-身長170cm 体重65kg
+身長: 170cm, 体重: 65kg, BMI: 22.5 (標準)
 ```
 
 ## BMI判定基準
@@ -69,11 +82,18 @@ BMI: 22.5 (標準)
 Alfred Workflowに組み込む前に、コマンドラインでテストできます:
 
 ```bash
+# 空入力
+python3 bmi_calculator.py ""
+
 # 身長のみ
 python3 bmi_calculator.py "170"
 
 # 身長+体重
 python3 bmi_calculator.py "170 65"
+
+# エラーケース
+python3 bmi_calculator.py "abc"
+python3 bmi_calculator.py "170 65 80"
 
 # JSON形式の確認
 python3 bmi_calculator.py "170 65" | jq .
@@ -84,6 +104,22 @@ python3 bmi_calculator.py "170 65" | jq .
 - **言語**: Python 3.9.6 (macOS標準)
 - **依存関係**: なし (標準ライブラリのみ)
 - **出力形式**: Alfred Script Filter JSON形式
+- **文字エンコーディング**: UTF-8
+
+## プロジェクト構成
+
+```
+20260107alfred-bmi/
+├── bmi_calculator.py       # メインスクリプト
+├── SPECIFICATION.md        # 機能仕様書
+├── CLAUDE.md               # Claude Code用ガイドライン
+├── README.md               # このファイル
+├── .cursorrules            # Cursor AI用プロジェクトルール
+└── .vscode/                # VSCode/Cursor設定
+    ├── settings.json       # エディター設定
+    ├── extensions.json     # 推奨拡張機能
+    └── launch.json         # デバッグ構成
+```
 
 ## ライセンス
 
