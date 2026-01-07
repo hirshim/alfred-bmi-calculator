@@ -114,11 +114,7 @@ python3 bmi_calculator.py "170 65" | jq .
 ├── SPECIFICATION.md        # 機能仕様書
 ├── CLAUDE.md               # Claude Code用ガイドライン
 ├── README.md               # このファイル
-├── .cursorrules            # Cursor AI用プロジェクトルール
-└── .vscode/                # VSCode/Cursor設定
-    ├── settings.json       # エディター設定
-    ├── extensions.json     # 推奨拡張機能
-    └── launch.json         # デバッグ構成
+└── LICENSE                 # MITライセンス
 ```
 
 ## ライセンス

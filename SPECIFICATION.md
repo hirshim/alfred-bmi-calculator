@@ -167,13 +167,9 @@
 project/
 ├── SPECIFICATION.md      # 本仕様書
 ├── CLAUDE.md             # Claude Code用のガイドライン
-├── .cursorrules          # Cursor AI用のプロジェクトルール
 ├── bmi_calculator.py     # メインスクリプト
 ├── README.md             # 使用方法とインストール手順（日本語）
-└── .vscode/              # VSCode/Cursor設定
-    ├── settings.json     # エディター設定
-    ├── extensions.json   # 推奨拡張機能
-    └── launch.json       # デバッグ構成
+└── LICENSE               # MITライセンス
 ```
 
 ## 7. Alfred Workflow設定
@@ -194,4 +190,3 @@ project/
 - [Alfred Script Filter JSON Format](https://www.alfredapp.com/help/workflows/inputs/script-filter/json/)
 - BMI基準: 日本肥満学会の基準に準拠
 - CLAUDE.md: Claude Code用の実装ガイドライン
-- .cursorrules: Cursor AI用のプロジェクトルール

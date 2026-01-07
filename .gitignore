@@ -2,6 +2,7 @@
 .vscode/
 .idea/
 .claude/
+.cursorrules
 *.swp
 *.swo
 *~
