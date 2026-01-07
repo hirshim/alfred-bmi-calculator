@@ -1,0 +1,117 @@
+# Alfred BMI Calculator Workflow - Cursor AI Rules
+
+## Project Overview
+
+This is an Alfred Workflow for BMI (Body Mass Index) calculation. It accepts height (and optionally weight) as input and displays ideal weight ranges or BMI calculations in Japanese.
+
+## Critical Requirements
+
+### Language & Dependencies
+- **Python Version**: 3.9.6 (system Python at `/usr/bin/python3`)
+- **Dependencies**: Standard library ONLY - no external packages
+- **Encoding**: UTF-8 for Japanese text support
+
+### Alfred Script Filter Contract
+
+This script MUST follow Alfred's Script Filter JSON format:
+
+**Input**: Received via `sys.argv[1:]` (from Alfred's `{query}`)
+**Output**: JSON to stdout with this exact structure:
+
+```json
+{
+  "items": [
+    {
+      "title": "計算結果",
+      "subtitle": "補足情報"
+    }
+  ]
+}
+```
+
+**CRITICAL RULES:**
+- Always return exactly ONE item in the `items` array
+- Never return multiple items or empty arrays
+- Never print anything to stdout except the final JSON
+- All errors must be returned as valid JSON with helpful messages
+
+### Input Patterns
+
+1. **Height only**: `170` (身長のみ、cm単位)
+2. **Height + Weight**: `170 65` (身長と体重、スペース区切り)
+
+### BMI Calculation Logic
+
+#### Mode 1: Height Only (理想体重計算)
+Calculate three weight thresholds using height(m)²:
+- 理想体重 (Ideal): × 22
+- 痩せ体重 (Underweight): × 18.5
+- 肥満体重 (Obese): × 25
+
+Output format: `"理想: Xkg | 痩せ: Ykg | 肥満: Zkg"`
+
+#### Mode 2: Height + Weight (BMI計算)
+Calculate: BMI = weight(kg) ÷ height(m)²
+
+Japanese obesity classification (日本肥満学会):
+- < 18.5: 痩せ
+- 18.5-24.9: 標準
+- 25-29.9: 肥満(1度)
+- 30-34.9: 肥満(2度)
+- 35-39.9: 肥満(3度)
+- ≥ 40: 肥満(4度)
+
+Output format: `"BMI: X.X (カテゴリー)"`
+
+### Error Handling
+
+All errors MUST return valid JSON:
+
+```python
+{
+  "items": [{
+    "title": "エラーメッセージ",
+    "subtitle": "詳細な説明"
+  }]
+}
+```
+
+Error cases:
+- Empty/no input → Show usage instructions
+- Non-numeric input → Parse error message
+- Invalid values (≤0 or unrealistic) → Validation error
+- Too many arguments → Usage error
+
+**Never allow exceptions to reach stdout**
+
+### Code Style Guidelines
+
+- Use clear variable names in English (e.g., `height_cm`, `weight_kg`)
+- Keep functions small and focused
+- Add docstrings for functions
+- Use type hints where helpful
+- Keep all Japanese text in the output only
+
+### Testing Commands
+
+```bash
+# Test height only
+python3 bmi_calculator.py "170"
+
+# Test height + weight
+python3 bmi_calculator.py "170 65"
+
+# Test error cases
+python3 bmi_calculator.py ""
+python3 bmi_calculator.py "abc"
+python3 bmi_calculator.py "170 65 80"
+
+# Validate JSON output
+python3 bmi_calculator.py "170 65" | jq .
+```
+
+### References
+
+- Full specification: See SPECIFICATION.md
+- Alfred Script Filter docs: https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
+- Project context: See CLAUDE.md
